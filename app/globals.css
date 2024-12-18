@@ -1,16 +1,8 @@
 /* Global Reset and Base Styles */
-@import '../public/styles.css';
-
-/* Any additional global styles can be added here */
-body {
+* {
   margin: 0;
   padding: 0;
-  font-family: 'Inter', sans-serif;
-}
-
-/* Ensure Next.js specific styling */
-#__next {
-  min-height: 100vh;
+  box-sizing: border-box;
 }
 
 :root {
