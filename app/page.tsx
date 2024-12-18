@@ -1,74 +1,76 @@
 'use client';
 
 import { useEffect } from 'react';
-import gsap from 'gsap';
-import * as THREE from 'three';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+
+import Header from './components/Header';
+import LoadingScreen from './components/LoadingScreen';
+import BackgroundCanvas from './components/BackgroundCanvas';
 
 export default function Home() {
   useEffect(() => {
     // Initialize AOS
-    AOS.init();
-
-    // GSAP Animations
-    const loadingScreen = document.querySelector('.loading-screen') as HTMLElement;
-    const loadingBar = document.querySelector('.loading-bar') as HTMLElement;
-
-    gsap.to(loadingBar, {
-      duration: 1.5,
-      scaleX: 1,
-      transformOrigin: 'left',
-      ease: 'power4.inOut'
+    AOS.init({
+      duration: 1000,
+      once: true
     });
-
-    gsap.to(loadingScreen, {
-      duration: 0.5,
-      opacity: 0,
-      delay: 2,
-      onComplete: () => {
-        loadingScreen.style.display = 'none';
-      }
-    });
-
-    // Three.js Gradient Canvas
-    const canvas = document.getElementById('gradient-canvas') as HTMLCanvasElement;
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ canvas });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    camera.position.z = 5;
-
   }, []);
 
   return (
     <div className="container">
-      <div className="loading-screen">
-        <div className="loading-animation">
-          <div className="loading-bar"></div>
-        </div>
-      </div>
-      <canvas id="gradient-canvas"></canvas>
-      
-      <header className="header">
-        <nav>
-          <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#projects">Projects</a></li>
-          </ul>
-        </nav>
-      </header>
-
+      <LoadingScreen />
+      <BackgroundCanvas />
+      <Header />
       <main>
-        <section id="home">
-          <h1>Joe Wicorek</h1>
-          <h2>Software Engineer</h2>
+        <section id="home" className="hero">
+          <div className="hero-content">
+            <h1 data-aos="fade-up">Your Name</h1>
+            <p data-aos="fade-up" data-aos-delay="200">
+              Software Engineer | Web Developer | Creative Technologist
+            </p>
+          </div>
+        </section>
+
+        <section id="about" className="about">
+          <h2 data-aos="fade-up">About Me</h2>
+          <div className="about-content" data-aos="fade-up" data-aos-delay="200">
+            <p>
+              Passionate developer with expertise in creating innovative web solutions. 
+              Combining technical skills with creative problem-solving to build 
+              exceptional digital experiences.
+            </p>
+          </div>
+        </section>
+
+        <section id="projects" className="projects">
+          <h2 data-aos="fade-up">Projects</h2>
+          <div className="project-grid">
+            <div className="project-card" data-aos="fade-up">
+              <h3>Project 1</h3>
+              <p>Description of your project</p>
+            </div>
+            <div className="project-card" data-aos="fade-up" data-aos-delay="200">
+              <h3>Project 2</h3>
+              <p>Description of your project</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" className="contact">
+          <h2 data-aos="fade-up">Contact Me</h2>
+          <div className="contact-form" data-aos="fade-up" data-aos-delay="200">
+            <form>
+              <input type="text" placeholder="Name" required />
+              <input type="email" placeholder="Email" required />
+              <textarea placeholder="Message" required></textarea>
+              <button type="submit">Send Message</button>
+            </form>
+          </div>
         </section>
       </main>
-
       <footer>
-        <p>© 2024 Joe Wicorek</p>
+        <p>&copy; 2024 Your Name. All Rights Reserved.</p>
       </footer>
     </div>
   );
