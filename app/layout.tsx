@@ -6,8 +6,8 @@ import Head from 'next/head'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Your Portfolio',
-  description: 'Personal portfolio',
+  title: 'Joseph Wicorek - Software Engineer Portfolio',
+  description: 'Portfolio showcasing software engineering projects and expertise',
 }
 
 export default function RootLayout({
@@ -17,10 +17,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <link rel="stylesheet" href="/styles.css" />
-        <script src="/scripts.js" defer></script>
-      </head>
+      <Head>
+        <link 
+          rel="stylesheet" 
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" 
+        />
+      </Head>
       <body className={inter.className}>{children}</body>
     </html>
   )
