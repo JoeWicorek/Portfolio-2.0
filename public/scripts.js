@@ -1,4 +1,9 @@
 // Initialize GSAP plugins
+
+console.log('GSAP loaded:', gsap !== undefined);
+console.log('ScrollTrigger loaded:', typeof ScrollTrigger !== 'undefined');
+console.log('ScrollToPlugin loaded:', typeof ScrollToPlugin !== 'undefined');
+
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 // Global variables
@@ -19,6 +24,11 @@ const loadingElements = {
 };
 
 const header = document.querySelector('.header');
+
+document.addEventListener('DOMContentLoaded', () => {
+    gsap.to('body', { backgroundColor: '#ff0000', duration: 2 });
+});
+
 
 // Loading Animation
 const initializeLoadingAnimation = () => {
