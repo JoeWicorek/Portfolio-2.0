@@ -2,7 +2,7 @@
 
 A personal portfolio website showcasing projects and skills.
 
-## Technologies Used
+### Technologies Used
 - HTML
 - CSS
 - JavaScript
