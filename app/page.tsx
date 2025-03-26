@@ -9,14 +9,22 @@ import LoadingScreen from './components/LoadingScreen';
 import BackgroundCanvas from './components/BackgroundCanvas';
 
 export default function Home() {
+  useEffect(() => {
+    // Ensure iframe content is loaded after component mounts
+    const iframe = document.querySelector('iframe');
+    if (iframe) {
+      iframe.src = '/index.html';
+    }
+  }, []);
+
   return (
-    <div>
+    <div style={{ width: '100%', height: '100vh', overflow: 'hidden' }}>
       <iframe 
-        src="/index.html" 
         style={{ 
           width: '100%', 
-          height: '100vh', 
-          border: 'none' 
+          height: '100%', 
+          border: 'none',
+          display: 'block' // Prevents unwanted spacing
         }} 
       />
     </div>
