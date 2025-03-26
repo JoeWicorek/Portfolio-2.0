@@ -1,12 +1,15 @@
 'use client';
 
-import { useEffect } from 'react';
-
 export default function Home() {
-  useEffect(() => {
-    // Remove iframe approach, directly serve index.html
-    window.location.href = '/index.html';
-  }, []);
-
-  return null;
+  return (
+    <iframe 
+      src="/index.html" 
+      style={{ 
+        width: '100%', 
+        height: '100vh', 
+        border: 'none',
+        display: 'block'
+      }} 
+    />
+  );
 }
