@@ -3,26 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Portfolio</title>
+    <title>Joseph Wicorek | Portfolio</title>
     
     <!-- Critical CSS first -->
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.6/lottie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
     
     <!-- Preload fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
-    <!-- Non-critical CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <!-- Meta tags -->
+    <meta name="description" content="Joseph Wicorek - Software Engineer Portfolio">
+    <meta name="keywords" content="software engineer, web developer, portfolio, Joseph Wicorek">
+    <meta name="author" content="Joseph Wicorek">
 </head>
 <body class="loading">
     <div class="loading-screen">
-        <div class="loading-animation">
-            <div class="loading-bar"></div>
+        <div class="loading-container">
+            <!-- New Lottie animation -->
+            <iframe src="https://lottie.host/embed/9668017d-2a19-4bf8-9726-e760ec29a4bb/UAQR4brNGN.lottie"></iframe>
         </div>
     </div>
+    
+    <!-- Fixed corner logo removed -->
+    
     <div class="mouse-trailer"></div>
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
@@ -33,45 +40,49 @@
     <div class="background-gradient"></div>
     <div class="container">
         <header class="header">
-            <nav class="nav-container">
-                <ul class="nav-links">
-                    <li class="nav-item">
-                        <a href="#home" class="nav-link">
-                            <span class="nav-number">01</span>
-                            <span class="nav-slash">//</span>
-                            <span class="nav-text">home</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#expertise" class="nav-link">
-                            <span class="nav-number">02</span>
-                            <span class="nav-slash">//</span>
-                            <span class="nav-text">expertise</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#work" class="nav-link">
-                            <span class="nav-number">03</span>
-                            <span class="nav-slash">//</span>
-                            <span class="nav-text">work</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#experience" class="nav-link">
-                            <span class="nav-number">04</span>
-                            <span class="nav-slash">//</span>
-                            <span class="nav-text">experience</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#contact" class="nav-link">
-                            <span class="nav-number">05</span>
-                            <span class="nav-slash">//</span>
-                            <span class="nav-text">contact</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+            <div class="header-content">
+                <div class="nav-center">
+                    <nav class="nav-container">
+                        <ul class="nav-links">
+                            <li class="nav-item">
+                                <a href="#home" class="nav-link">
+                                    <span class="nav-number">01</span>
+                                    <span class="nav-slash">//</span>
+                                    <span class="nav-text">home</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#expertise" class="nav-link">
+                                    <span class="nav-number">02</span>
+                                    <span class="nav-slash">//</span>
+                                    <span class="nav-text">expertise</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#work" class="nav-link">
+                                    <span class="nav-number">03</span>
+                                    <span class="nav-slash">//</span>
+                                    <span class="nav-text">work</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#experience" class="nav-link">
+                                    <span class="nav-number">04</span>
+                                    <span class="nav-slash">//</span>
+                                    <span class="nav-text">experience</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#contact" class="nav-link">
+                                    <span class="nav-number">05</span>
+                                    <span class="nav-slash">//</span>
+                                    <span class="nav-text">contact</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
         </header>
 
         <div id="scroll-arrow" class="scroll-indicator">
@@ -85,33 +96,31 @@
         <main>
             <section id="hero" class="hero-section">
                 <div class="hero-content">
-                    <div class="title-container">
-                        <h1>Hi 👋, I'm</h1>
-                        <h2 class="highlight-text">Joseph Wicorek</h2>
-                        <div class="typewriter-container">
-                            <span class="static-text">I'm a&nbsp;</span>
-                            <div class="typewriter-wrapper">
-                                <span id="role-text"></span>
-                                <div class="cursor"></div>
-                            </div>
+                    <h1 class="hero-animate">Hi 👋, I'm</h1>
+                    <h2 class="hero-animate highlight-text">Joseph Wicorek</h2>
+                    <div class="typewriter-container hero-animate">
+                        <span class="static-text">I'm a&nbsp;</span>
+                        <div class="typewriter-wrapper">
+                            <span id="role-text"></span>
+                            <div class="cursor"></div>
                         </div>
-                        <p class="hero-description">
-                            I enjoy building innovative software solutions that bridge technical complexity with elegant design, 
-                            transforming intricate challenges into streamlined, user-centric experiences. Committed to developing 
-                            high-performance applications that not only solve problems but drive meaningful technological innovation 
-                            and create tangible value.
-                        </p>
-                        <div class="social-links">
-                            <a href="https://github.com/JoeWicorek" target="_blank" rel="noopener noreferrer" class="social-link">
-                                <i class="fab fa-github"></i>
-                            </a>
-                            <a href="https://www.linkedin.com/in/josephwicorek/" target="_blank" rel="noopener noreferrer" class="social-link">
-                                <i class="fab fa-linkedin"></i>
-                            </a>
-                            <a href="mailto:josephwicorek@gmail.com" class="social-link">
-                                <i class="fas fa-envelope"></i>
-                            </a>
-                        </div>
+                    </div>
+                    <p class="hero-description hero-animate">
+                        I enjoy building innovative software solutions that bridge technical complexity with elegant design, 
+                        transforming intricate challenges into streamlined, user-centric experiences. Committed to developing 
+                        high-performance applications that not only solve problems but drive meaningful technological innovation 
+                        and create tangible value.
+                    </p>
+                    <div class="social-links hero-animate">
+                        <a href="https://github.com/JoeWicorek" target="_blank" rel="noopener noreferrer" class="social-link">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/josephwicorek/" target="_blank" rel="noopener noreferrer" class="social-link">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="mailto:josephwicorek@gmail.com" class="social-link">
+                            <i class="fas fa-envelope"></i>
+                        </a>
                     </div>
                 </div>
             </section>
@@ -219,7 +228,6 @@
     </div>
     
     <!-- Load dependencies in correct order -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/ScrollToPlugin.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>

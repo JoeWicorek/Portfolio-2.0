@@ -37,15 +37,37 @@ body {
     left: 0;
     width: 100%;
     z-index: 1000;
-    padding: 1.5rem;
+    padding: 0;
     transition: all 0.3s ease;
     background: rgba(10, 25, 47, 0.85);
     backdrop-filter: blur(10px);
+    height: 70px; /* Set a fixed height for the header */
+    display: flex;
+    align-items: center;
+}
+
+.header-content {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 0 20px;
+}
+
+/* Logo CSS removed */
+
+/* Nav center section */
+.nav-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
 }
 
 .nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
+    display: flex;
+    align-items: center;
 }
 
 .nav-links {
@@ -128,6 +150,26 @@ body {
     transform: translate(0);
 }
 
+/* Navigation specific fixes */
+.nav-number, 
+.nav-slash, 
+.nav-text {
+    opacity: 1 !important; /* Make these elements always visible */
+    transform: none !important; /* Reset any transforms */
+}
+
+/* Remove conflicting styles */
+.nav-item {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.nav-item.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 /* Hero Section */
 .hero-section {
     min-height: 100vh;
@@ -158,24 +200,25 @@ body {
     margin-bottom: 1.5rem;
 }
 
+/* Typewriter styles */
 .typewriter-container {
-    font-size: 2rem;
-    margin-bottom: 2rem;
     display: flex;
     align-items: center;
-    color: #8892b0;
+    margin: 10px 0 20px;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.static-text {
+    margin-right: 5px;
 }
 
 .typewriter-wrapper {
-    position: relative;
     display: inline-flex;
     align-items: center;
-}
-
-#role-text {
-    color: #64ffda;
-    font-weight: 500;
-    white-space: nowrap;
+    color: var(--primary-color);
+    min-width: 10px;
 }
 
 .cursor {
@@ -183,9 +226,19 @@ body {
     display: inline-block;
     width: 2px;
     height: 1.2em;
-    background-color: #64ffda;
+    background-color: var(--primary-color);
     margin-left: 2px;
     animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Remove any extra cursors */
+.cursor-dot, .cursor-outline, .cursor-follower {
+    display: none !important;
 }
 
 .hero-description {
@@ -529,6 +582,41 @@ h2 {
     }
 }
 
+/* Loading Animation */
+.loading {
+    overflow: hidden;
+}
+
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.loading-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 450px;
+    height: 450px;
+}
+
+/* Lottie iframe styling */
+.loading-container iframe {
+    width: 450px;
+    height: 450px;
+    border: none;
+}
+
 /* Scroll Indicator */
 .scroll-indicator {
     position: fixed;
@@ -559,7 +647,6 @@ h2 {
     background: rgba(100, 255, 218, 0.1);
     transition: transform 0.2s ease, background-color 0.2s ease;
     will-change: transform;
-    animation: arrowFloat 2s ease-in-out infinite;
 }
 
 .arrow {
@@ -568,38 +655,20 @@ h2 {
     fill: #64ffda;
     transition: transform 0.2s ease;
     will-change: transform;
-    animation: arrowBounce 2s ease-in-out infinite;
 }
 
-@keyframes arrowFloat {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-8px);
-    }
-}
-
-@keyframes arrowBounce {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(4px);
-    }
-}
-
-@media (hover: hover) {
-    .scroll-indicator:hover .arrow-container {
-        transform: scale(1.1);
-        background: rgba(100, 255, 218, 0.2);
-        animation-play-state: paused;
-    }
-
-    .scroll-indicator:hover .arrow {
-        transform: translateY(2px);
-        animation-play-state: paused;
-    }
+/* Basic Loading Screen */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
 }
 
 /* Footer */
@@ -607,43 +676,6 @@ footer {
     text-align: center;
     padding: 20px 0;
     font-size: 0.9rem;
-}
-
-/* Custom Cursor */
-.cursor-dot {
-    width: 5px;
-    height: 5px;
-    background-color: #64ffda;
-    position: fixed;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    border-radius: 50%;
-    z-index: 10000;
-}
-
-.cursor-outline {
-    width: 30px;
-    height: 30px;
-    border: 1.5px solid rgba(100, 255, 218, 0.8);
-    position: fixed;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    border-radius: 50%;
-    z-index: 9999;
-    transition: width 0.2s ease-out, height 0.2s ease-out;
-}
-
-.mouse-trailer {
-    display: none;
-}
-
-a:hover ~ .cursor-outline,
-button:hover ~ .cursor-outline,
-.project-card:hover ~ .cursor-outline {
-    width: 40px;
-    height: 40px;
 }
 
 /* Gradient Background */
@@ -667,58 +699,82 @@ button:hover ~ .cursor-outline,
     z-index: -1;
 }
 
-/* Glitch Effect */
-.glitch {
-    position: relative;
-    animation: glitch 1s linear infinite;
+/* Standalone Animation Styles */
+/* Initial states for animated elements */
+.hero-content h1,
+.hero-content h2,
+.typewriter-container,
+.hero-description,
+.social-links {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-.glitch::before,
-.glitch::after {
-    content: attr(data-text);
-    position: absolute;
-    left: 0;
-    text-shadow: 1px 0 blue;
-    top: 0;
-    color: var(--primary-color);
-    overflow: hidden;
-    clip: rect(0, 900px, 0, 0);
-    animation: noise-anim 2s infinite linear alternate-reverse;
+.scroll-indicator {
+    opacity: 0;
+    transition: opacity 0.5s ease;
 }
 
-.glitch::after {
-    text-shadow: -1px 0 red;
-    animation: noise-anim-2 3s infinite linear alternate-reverse;
+/* Loading screen transition */
+.loading-screen {
+    transition: opacity 0.8s ease;
 }
 
-@keyframes noise-anim {
-    0% {
-        clip: rect(51px, 9999px, 28px, 0);
-    }
-    5% {
-        clip: rect(70px, 9999px, 19px, 0);
-    }
-    10% {
-        clip: rect(92px, 9999px, 13px, 0);
-    }
-    /* ... Add more keyframes as needed ... */
-    100% {
-        clip: rect(91px, 9999px, 83px, 0);
-    }
+/* Ensure nav items are always visible */
+.nav-links .nav-item {
+    opacity: 1 !important; /* Override any opacity settings */
+    transform: none !important; /* Override any transform settings */
 }
 
-@keyframes noise-anim-2 {
-    0% {
-        clip: rect(33px, 9999px, 144px, 0);
-    }
-    5% {
-        clip: rect(62px, 9999px, 52px, 0);
-    }
-    10% {
-        clip: rect(45px, 9999px, 27px, 0);
-    }
-    /* ... Add more keyframes as needed ... */
-    100% {
-        clip: rect(67px, 9999px, 78px, 0);
-    }
+/* Brittany Chiang Style Staggered Reveal Animations */
+body:not(.visible) .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+body.visible .fade-in {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.nav-item {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.nav-item.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hero-animate {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.hero-animate.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#scroll-arrow {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+#scroll-arrow.fade-in {
+    opacity: 1;
+}
+
+/* Remove old logo styles */
+.logo-header,
+.logo-header-svg,
+.logo-path-header,
+.logo-j-header,
+.logo-w-header {
+    display: none;
 }
