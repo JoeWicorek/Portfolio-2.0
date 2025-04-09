@@ -3,9 +3,7 @@
     "buildCommand": "next build",
     "outputDirectory": "out",
     "public": true,
-    "cleanUrls": true,
-    "routes": [
-        { "handle": "filesystem" },
-        { "src": "/(.*)", "dest": "/index.html" }
+    "rewrites": [
+        { "source": "/(.*)", "destination": "/index.html" }
     ]
 }
