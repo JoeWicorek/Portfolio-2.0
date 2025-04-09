@@ -14,6 +14,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Meta tags -->
     <meta name="description" content="Joseph Wicorek - Software Engineer Portfolio">
@@ -23,8 +24,19 @@
 <body class="loading">
     <div class="loading-screen">
         <div class="loading-container">
-            <!-- New Lottie animation -->
-            <iframe src="https://lottie.host/embed/9668017d-2a19-4bf8-9726-e760ec29a4bb/UAQR4brNGN.lottie"></iframe>
+            <div class="code-editor">
+                <div class="code-editor-header">
+                    <div class="code-editor-dots">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <div class="code-editor-title">portfolio.js</div>
+                </div>
+                <div class="code-editor-body">
+                    <pre><code class="code-typing"></code></pre>
+                </div>
+            </div>
         </div>
     </div>
     
@@ -38,6 +50,15 @@
     <div class="cursor-follower"></div>
     <div class="noise"></div>
     <div class="background-gradient"></div>
+    <div class="logo-container">
+        <a href="#hero" class="logo-link">
+            <div class="logo">
+                <span class="logo-bracket">&lt;</span>
+                <span class="logo-text">JW</span>
+                <span class="logo-bracket">/&gt;</span>
+            </div>
+        </a>
+    </div>
     <div class="container">
         <header class="header">
             <div class="header-content">
@@ -95,32 +116,35 @@
 
         <main>
             <section id="hero" class="hero-section">
-                <div class="hero-content">
-                    <h1 class="hero-animate">Hi 👋, I'm</h1>
-                    <h2 class="hero-animate highlight-text">Joseph Wicorek</h2>
-                    <div class="typewriter-container hero-animate">
-                        <span class="static-text">I'm a&nbsp;</span>
-                        <div class="typewriter-wrapper">
-                            <span id="role-text"></span>
-                            <div class="cursor"></div>
+                <div class="container">
+                    <div class="hero-content">
+                        <h1 class="hero-animate">Hi 👋, my name is</h1>
+                        <h2 class="hero-animate">Joseph Wicorek.</h2>
+                        <div class="typewriter-container hero-animate">
+                            <span class="static-text">I'm a&nbsp;</span>
+                            <div class="typewriter-wrapper">
+                                <span id="role-text"></span>
+                                <div class="cursor"></div>
+                            </div>
                         </div>
-                    </div>
-                    <p class="hero-description hero-animate">
-                        I enjoy building innovative software solutions that bridge technical complexity with elegant design, 
-                        transforming intricate challenges into streamlined, user-centric experiences. Committed to developing 
-                        high-performance applications that not only solve problems but drive meaningful technological innovation 
-                        and create tangible value.
-                    </p>
-                    <div class="social-links hero-animate">
-                        <a href="https://github.com/JoeWicorek" target="_blank" rel="noopener noreferrer" class="social-link">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="https://www.linkedin.com/in/josephwicorek/" target="_blank" rel="noopener noreferrer" class="social-link">
-                            <i class="fab fa-linkedin"></i>
-                        </a>
-                        <a href="mailto:josephwicorek@gmail.com" class="social-link">
-                            <i class="fas fa-envelope"></i>
-                        </a>
+                        <p class="hero-description hero-animate">
+                            I enjoy building innovative software solutions that bridge technical 
+                            complexity with elegant design, transforming intricate challenges into 
+                            streamlined, user-centric experiences. Committed to developing 
+                            high-performance applications that not only solve problems but drive 
+                            meaningful technological innovation and create tangible value.
+                        </p>
+                        <div class="social-links hero-animate">
+                            <a href="https://github.com/JoeWicorek" target="_blank" rel="noopener noreferrer" class="social-link">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="https://linkedin.com/in/josephwicorek" target="_blank" rel="noopener noreferrer" class="social-link">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="mailto:josephwicorek@gmail.com" class="social-link">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -225,6 +249,31 @@
         <footer>
             <p> 2024 Your Name. All rights reserved.</p>
         </footer>
+    </div>
+    <div class="side-social">
+        <ul>
+            <li><a href="https://github.com/JoeWicorek" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a></li>
+            <li><a href="https://linkedin.com/in/josephwicorek" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a></li>
+            <li><a href="https://leetcode.com/joewicorek" target="_blank" rel="noopener noreferrer" class="leetcode-link">
+                <img src="images/leetcode-logo-gray.svg" alt="LeetCode" class="leetcode-icon">
+            </a></li>
+            <li><a href="mailto:josephwicorek@gmail.com"><i class="fas fa-envelope"></i></a></li>
+        </ul>
+        <div class="social-arrow-container">
+            <div class="social-arrow">
+                <i class="fas fa-chevron-up"></i>
+                <div class="social-tooltip">
+                    <span class="tooltip-text">Connect with me!</span>
+                    <div class="tooltip-icons">
+                        <i class="fab fa-github"></i>
+                        <i class="fab fa-linkedin-in"></i>
+                        <img src="images/leetcode-logo-gray.svg" alt="LeetCode" class="leetcode-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="side-line"></div>
     </div>
     
     <!-- Load dependencies in correct order -->
