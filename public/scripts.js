@@ -66,26 +66,13 @@ dev.init();`;
                 setTimeout(() => {
                     loadingScreen.classList.add('fade-out');
                     
-                    // Ensure hero content is ready before fading out loading screen
-                    const heroContent = document.querySelector('.hero-content');
-                    if (heroContent) {
-                        const heroElements = heroContent.querySelectorAll('h1, h2, .typewriter-container, .hero-description');
-                        heroElements.forEach(el => {
-                            el.style.visibility = 'visible';
-                            el.style.opacity = '1';
-                            el.style.display = el.tagName.toLowerCase() === 'h1' || el.tagName.toLowerCase() === 'h2' ? 'block' : 'flex';
-                        });
-                    }
-                    
                     // Wait for transition to complete before removing
                     setTimeout(() => {
                         document.body.classList.remove('loading');
                         loadingScreen.style.display = 'none';
                         
-                        // Initialize main content
-                        animateHeroElements();
-                        initTypewriterEffect();
-                        initializePageElements();
+                        // Start main content animations
+                        startBrittanyChiangStyleAnimations();
                     }, 800);
                 }, 800);
             }
@@ -101,49 +88,95 @@ dev.init();`;
             loadingScreen.style.display = 'none';
         }
         document.body.classList.remove('loading');
-        animateHeroElements();
-        initTypewriterEffect();
-        initializePageElements();
+        startBrittanyChiangStyleAnimations();
     }
     
-    // Animate hero elements
-    function animateHeroElements() {
-        console.log('Animating hero elements');
+    // Brittany Chiang style staggered animations
+    function startBrittanyChiangStyleAnimations() {
+        console.log('Starting Brittany Chiang style animations');
         
-        // Make sure all hero elements are visible first
-        const heroContent = document.querySelector('.hero-content');
-        if (heroContent) {
-            heroContent.style.visibility = 'visible';
-            heroContent.style.opacity = '1';
-        }
+        // Force hide hero elements initially
+        document.querySelectorAll('.hero-animate, .hero-description, .social-links').forEach(el => {
+            el.style.opacity = '0';
+            el.style.visibility = 'hidden';
+            el.style.transform = 'translateY(20px)';
+        });
         
-        // Get hero elements
-        const heroElements = document.querySelectorAll('.hero-animate');
-        console.log(`Found ${heroElements.length} hero elements to animate`);
+        // Define animation sequence in exact order
+        const animationSequence = [
+            // 1. First animate navbar items one by one
+            ...Array.from(document.querySelectorAll('.nav-item')),
+            
+            // 2. Then animate the logo
+            document.querySelector('.logo-container'),
+            
+            // 3. Then animate resume button
+            document.querySelector('.resume-button-container'),
+            
+            // 4. Then animate side social links
+            document.querySelector('.side-social'),
+            
+            // 5. Then animate scroll arrow
+            document.getElementById('scroll-arrow'),
+            
+            // 6. Finally animate hero content
+            ...Array.from(document.querySelectorAll('.hero-animate'))
+        ];
         
-        if (heroElements && heroElements.length) {
-            gsap.from(heroElements, {
-                duration: 1,
-                y: 20,
-                opacity: 0,
-                stagger: 0.15,
-                ease: "power3.out",
-                onComplete: () => {
-                    console.log('Hero animation complete');
-                }
+        // Filter out any null elements
+        const validElements = animationSequence.filter(el => el !== null);
+        
+        // Log what we found
+        console.log(`Found ${validElements.length} elements to animate`);
+        
+        // Get navbar items for special handling
+        const navItems = Array.from(document.querySelectorAll('.nav-item'));
+        
+        // Animate navbar items one by one with setTimeout
+        navItems.forEach((navItem, index) => {
+            setTimeout(() => {
+                navItem.classList.add('fade-in-element');
+                navItem.classList.remove('hidden');
+                navItem.style.opacity = '1';
+                navItem.style.visibility = 'visible';
+                navItem.style.transform = 'translateY(0)';
+                console.log(`Animating navbar item ${index + 1}`);
+            }, 150 * index);
+        });
+        
+        // Calculate when navbar animation will complete
+        const navbarAnimationTime = 150 * navItems.length + 200;
+        
+        // Animate the rest of the elements after navbar animation completes
+        setTimeout(() => {
+            // Get non-navbar elements
+            const nonNavElements = validElements.filter(el => !el.classList.contains('nav-item'));
+            
+            // Animate each non-navbar element with a delay
+            nonNavElements.forEach((element, index) => {
+                setTimeout(() => {
+                    element.classList.add('fade-in-element');
+                    element.classList.remove('hidden');
+                    element.style.opacity = '1';
+                    element.style.visibility = 'visible';
+                    element.style.transform = 'translateY(0)';
+                    console.log(`Animating non-nav element ${index + 1}`);
+                }, 150 * index);
             });
-        }
-        
-        const scrollArrow = document.getElementById('scroll-arrow');
-        if (scrollArrow) {
-            gsap.from(scrollArrow, {
-                duration: 0.8,
-                y: -20,
-                opacity: 0,
-                ease: "back.out(1.7)",
-                delay: 0.3
-            });
-        }
+            
+            // After all animations complete
+            const totalDelay = 150 * nonNavElements.length + 200;
+            
+            setTimeout(() => {
+                document.body.classList.add('animations-complete');
+                
+                // Initialize typewriter effect
+                initTypewriterEffect();
+                
+                // Initialize other page elements
+                initializePageElements();
+            }, totalDelay);
+        }, navbarAnimationTime);
     }
     
     // Initialize other page elements

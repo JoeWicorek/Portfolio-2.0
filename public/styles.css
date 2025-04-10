@@ -36,8 +36,8 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    padding: 20px 0;
     z-index: 100;
+    padding: 20px 0;
     transition: all 0.3s ease;
     background-color: rgba(0, 6, 48, 0.85);
     backdrop-filter: blur(10px);
@@ -48,13 +48,19 @@ body {
 
 .header-content {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 50px;
     width: 100%;
     position: relative;
+}
+
+.nav-center {
+    display: flex;
+    justify-content: center;
+    flex: 1;
 }
 
 .logo-container {
@@ -65,6 +71,11 @@ body {
     height: 70px;
     display: flex;
     align-items: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), 
+                transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    visibility: hidden;
 }
 
 .logo-link {
@@ -168,6 +179,22 @@ body {
 
 .nav-item {
     position: relative;
+    opacity: 0 !important;
+    transform: translateY(40px) !important;
+    visibility: hidden !important;
+    transition: opacity 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1),
+                visibility 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    will-change: opacity, transform, visibility;
+}
+
+.nav-item.fade-in-element {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    visibility: visible !important;
+    transition: opacity 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1),
+                visibility 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
 }
 
 .nav-link {
@@ -184,23 +211,23 @@ body {
 .nav-number {
     color: var(--primary-color);
     font-size: 0.8rem;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.3s ease;
+    opacity: 1;
+    transform: translateY(0);
+    transition: none;
 }
 
 .nav-slash {
     color: var(--primary-color);
-    opacity: 0;
-    transform: translateX(-5px);
-    transition: all 0.3s ease;
+    opacity: 1;
+    transform: translateX(0);
+    transition: none;
 }
 
 .nav-text {
     position: relative;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.3s ease;
+    opacity: 1;
+    transform: translateY(0);
+    transition: none;
 }
 
 .nav-text::after {
@@ -230,31 +257,48 @@ body {
 }
 
 /* Animation classes */
-.nav-item.animate-in .nav-number,
-.nav-item.animate-in .nav-slash,
-.nav-item.animate-in .nav-text {
-    opacity: 1;
-    transform: translate(0);
-}
-
-/* Navigation specific fixes */
-.nav-number, 
-.nav-slash, 
-.nav-text {
-    opacity: 1 !important; /* Make these elements always visible */
-    transform: none !important; /* Reset any transforms */
-}
-
-/* Remove conflicting styles */
-.nav-item {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-}
-
-.nav-item.fade-in {
+.nav-item.fade-in-element {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* Fade-in Animation Styles */
+.fade-in .logo-container,
+.fade-in .nav-item,
+.fade-in .hero-animate,
+.fade-in .side-social,
+.fade-in #scroll-arrow {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+    transition-delay: 0s;
+}
+
+/* Animation classes for when elements should appear */
+.fade-in-element {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    visibility: visible !important;
+}
+
+/* Override any conflicting styles */
+.nav-item.fade-in-element,
+.logo-container.fade-in-element,
+.side-social.fade-in-element,
+#scroll-arrow.fade-in-element {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    visibility: visible !important;
+}
+
+/* After animations complete, ensure everything is visible */
+body.animations-complete .nav-item,
+body.animations-complete .logo-container,
+body.animations-complete .side-social,
+body.animations-complete #scroll-arrow {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    visibility: visible !important;
 }
 
 /* Hero Section */
@@ -380,6 +424,27 @@ body {
 .social-link:hover {
     color: var(--primary-color);
     transform: translateY(-3px);
+}
+
+/* Ensure hero elements are properly hidden initially */
+.hero-description,
+.social-links,
+.hero-animate {
+    opacity: 0 !important;
+    transform: translateY(20px) !important;
+    visibility: hidden !important;
+    transition: opacity 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), 
+                transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),
+                visibility 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+/* Override for hero elements when they should appear */
+.hero-description.fade-in-element,
+.social-links.fade-in-element,
+.hero-animate.fade-in-element {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    visibility: visible !important;
 }
 
 /* Section Styles */
@@ -769,9 +834,40 @@ h2 {
 }
 
 /* Loading screen transition */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.8s ease-in-out;
+}
+
 .loading-screen.fade-out {
     opacity: 0;
-    transition: opacity 1.2s ease-in-out;
+    transition: opacity 0.8s ease-in-out;
+}
+
+.loading-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 450px;
+    height: 450px;
+}
+
+.loading-text {
+    font-family: 'Fira Code', monospace;
+    font-size: 16px;
+    color: var(--primary-color);
+    margin-top: 10px;
 }
 
 /* Scroll Indicator */
@@ -814,41 +910,125 @@ h2 {
     will-change: transform;
 }
 
-/* Basic Loading Screen */
-.loading-screen {
+/* Resume Button Styles */
+.resume-button-container {
     position: fixed;
     top: 0;
+    right: 50px;
+    z-index: 101;
+    opacity: 0;
+    transform: translateY(20px);
+    visibility: hidden;
+    transition: opacity 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                visibility 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    height: 70px;
+    display: flex;
+    align-items: center;
+}
+
+.resume-button-container.fade-in-element {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+}
+
+.resume-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    border-radius: 4px;
+    font-family: 'Fira Code', monospace;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.resume-button i {
+    margin-left: 8px;
+    font-size: 14px;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    z-index: 2;
+}
+
+/* Liquid fill animation */
+.resume-button::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
     left: 0;
     width: 100%;
+    height: 0;
+    background-color: var(--primary-color);
+    transition: height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: -1;
+}
+
+.resume-button:hover {
+    color: var(--bg-color);
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(0, 195, 255, 0.3);
+}
+
+.resume-button:hover::before {
     height: 100%;
-    background-color: var(--bg-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-    opacity: 1;
-    transition: opacity 0.8s ease-in-out;
+    animation: liquid-fill 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-.loading-screen.fade-out {
-    opacity: 0;
+.resume-button:hover i {
+    transform: translateY(-3px);
+    animation: float 1.5s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
 }
 
-.loading-container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 450px;
-    height: 450px;
+@keyframes liquid-fill {
+    0% {
+        height: 0;
+        border-radius: 100% 100% 0 0 / 20px;
+    }
+    50% {
+        height: 60%;
+        border-radius: 100% 100% 0 0 / 10px;
+    }
+    100% {
+        height: 100%;
+        border-radius: 0;
+    }
 }
 
-.loading-text {
-    font-family: 'Fira Code', monospace;
-    font-size: 16px;
-    color: var(--primary-color);
-    margin-top: 10px;
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .resume-button-container {
+        position: fixed;
+        top: auto;
+        bottom: 20px;
+        right: 20px;
+        z-index: 100;
+        height: auto;
+    }
+    
+    .resume-button {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
 }
 
 /* Footer */
@@ -907,62 +1087,50 @@ footer {
     transform: none !important; /* Override any transform settings */
 }
 
-/* Brittany Chiang Style Staggered Reveal Animations */
-body:not(.visible) .fade-in {
+/* Animation Styles - Based on Brittany Chiang's design */
+
+.hidden {
     opacity: 0;
     transform: translateY(20px);
+    visibility: hidden;
 }
 
-body.visible .fade-in {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-}
-
-.nav-item {
-    opacity: 0;
-    transform: translateY(-20px);
-    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-}
-
-.nav-item.fade-in {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.hero-animate {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-}
-
-.hero-animate.fade-in {
-    opacity: 1;
-    transform: translateY(0);
-}
-
+.nav-item,
+.logo-container,
+.side-social,
 #scroll-arrow {
     opacity: 0;
-    transition: opacity 0.5s ease-in-out;
+    transform: translateY(20px);
+    transition: opacity 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), 
+                transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    visibility: hidden;
 }
 
-#scroll-arrow.fade-in {
-    opacity: 1;
+/* Animation classes for when elements should appear */
+.fade-in-element {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    visibility: visible !important;
 }
 
-/* Remove old logo styles */
-.logo-header,
-.logo-header-svg,
-.logo-path-header,
-.logo-j-header,
-.logo-w-header {
-    display: none;
+/* Override any conflicting styles */
+.nav-item.fade-in-element,
+.logo-container.fade-in-element,
+.side-social.fade-in-element,
+#scroll-arrow.fade-in-element {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    visibility: visible !important;
 }
 
-/* Loading screen transition */
-.loading-screen.fade-out {
-    opacity: 0;
-    transition: opacity 1.2s ease-in-out;
+/* After animations complete, ensure everything is visible */
+body.animations-complete .nav-item,
+body.animations-complete .logo-container,
+body.animations-complete .side-social,
+body.animations-complete #scroll-arrow {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    visibility: visible !important;
 }
 
 /* Side Logo */
@@ -982,6 +1150,11 @@ body.visible .fade-in {
     display: flex;
     flex-direction: column;
     align-items: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), 
+                transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    visibility: hidden;
 }
 
 .side-social ul {

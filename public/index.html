@@ -7,7 +7,6 @@
     
     <!-- Critical CSS first -->
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.6/lottie.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
     
     <!-- Preload fonts -->
@@ -21,7 +20,7 @@
     <meta name="keywords" content="software engineer, web developer, portfolio, Joseph Wicorek">
     <meta name="author" content="Joseph Wicorek">
 </head>
-<body class="loading">
+<body class="loading fade-in">
     <div class="loading-screen">
         <div class="loading-container">
             <div class="code-editor">
@@ -39,9 +38,6 @@
             </div>
         </div>
     </div>
-    
-    <!-- Fixed corner logo removed -->
-    
     <div class="mouse-trailer"></div>
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
@@ -50,7 +46,7 @@
     <div class="cursor-follower"></div>
     <div class="noise"></div>
     <div class="background-gradient"></div>
-    <div class="logo-container">
+    <div class="logo-container hidden">
         <a href="#hero" class="logo-link">
             <div class="logo">
                 <span class="logo-bracket">&lt;</span>
@@ -59,41 +55,48 @@
             </div>
         </a>
     </div>
+    
+    <div class="resume-button-container hidden">
+        <a href="assets/Joe Wicorek Resume.pdf" target="_blank" class="resume-button">
+            Resume <i class="fas fa-file-alt"></i>
+        </a>
+    </div>
+    
     <div class="container">
         <header class="header">
             <div class="header-content">
                 <div class="nav-center">
                     <nav class="nav-container">
                         <ul class="nav-links">
-                            <li class="nav-item">
+                            <li class="nav-item hidden">
                                 <a href="#home" class="nav-link">
                                     <span class="nav-number">01</span>
                                     <span class="nav-slash">//</span>
                                     <span class="nav-text">home</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item hidden">
                                 <a href="#expertise" class="nav-link">
                                     <span class="nav-number">02</span>
                                     <span class="nav-slash">//</span>
                                     <span class="nav-text">expertise</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item hidden">
                                 <a href="#work" class="nav-link">
                                     <span class="nav-number">03</span>
                                     <span class="nav-slash">//</span>
                                     <span class="nav-text">work</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item hidden">
                                 <a href="#experience" class="nav-link">
                                     <span class="nav-number">04</span>
                                     <span class="nav-slash">//</span>
                                     <span class="nav-text">experience</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item hidden">
                                 <a href="#contact" class="nav-link">
                                     <span class="nav-number">05</span>
                                     <span class="nav-slash">//</span>
@@ -106,7 +109,7 @@
             </div>
         </header>
 
-        <div id="scroll-arrow" class="scroll-indicator">
+        <div id="scroll-arrow" class="scroll-indicator hidden">
             <div class="arrow-container">
                 <svg class="arrow" viewBox="0 0 24 24">
                     <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
@@ -118,33 +121,22 @@
             <section id="hero" class="hero-section">
                 <div class="container">
                     <div class="hero-content">
-                        <h1 class="hero-animate">Hi 👋, my name is</h1>
-                        <h2 class="hero-animate">Joseph Wicorek.</h2>
-                        <div class="typewriter-container hero-animate">
+                        <h1 class="hero-animate hidden">Hi 👋, my name is</h1>
+                        <h2 class="hero-animate hidden">Joseph Wicorek.</h2>
+                        <div class="typewriter-container hero-animate hidden">
                             <span class="static-text">I'm a&nbsp;</span>
                             <div class="typewriter-wrapper">
                                 <span id="role-text"></span>
                                 <div class="cursor"></div>
                             </div>
                         </div>
-                        <p class="hero-description hero-animate">
+                        <p class="hero-description hero-animate hidden" style="opacity: 0 !important; visibility: hidden !important;">
                             I enjoy building innovative software solutions that bridge technical 
                             complexity with elegant design, transforming intricate challenges into 
                             streamlined, user-centric experiences. Committed to developing 
                             high-performance applications that not only solve problems but drive 
                             meaningful technological innovation and create tangible value.
                         </p>
-                        <div class="social-links hero-animate">
-                            <a href="https://github.com/JoeWicorek" target="_blank" rel="noopener noreferrer" class="social-link">
-                                <i class="fab fa-github"></i>
-                            </a>
-                            <a href="https://linkedin.com/in/josephwicorek" target="_blank" rel="noopener noreferrer" class="social-link">
-                                <i class="fab fa-linkedin-in"></i>
-                            </a>
-                            <a href="mailto:josephwicorek@gmail.com" class="social-link">
-                                <i class="fas fa-envelope"></i>
-                            </a>
-                        </div>
                     </div>
                 </div>
             </section>
@@ -250,7 +242,7 @@
             <p> 2024 Your Name. All rights reserved.</p>
         </footer>
     </div>
-    <div class="side-social">
+    <div class="side-social hidden">
         <ul>
             <li><a href="https://github.com/JoeWicorek" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a></li>
             <li><a href="https://linkedin.com/in/josephwicorek" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a></li>
