@@ -10,76 +10,94 @@ document.addEventListener('DOMContentLoaded', () => {
     const roleText = document.getElementById('role-text');
     
     // Code to be typed
-    const codeSnippet = `/* Portfolio */
+    const codeSnippet = `// Portfolio
 const dev = {
   name: "Joseph Wicorek",
-  role: "Software Engineer"
+  role: "Software Engineer",
+  init: function() {
+    console.log(\${this.name} - \${this.role});
+  }
 };
-dev.init();`;
+
+dev.init(); // Output: Joseph Wicorek - Software Engineer`;
     
     // Function to add syntax highlighting
     function highlightCode(code) {
         return code
-            .replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, match => `<span class="code-comment">${match}</span>`)
+            .replace(/\/\/.*$/gm, match => `<span class="code-comment">${match}</span>`)
+            .replace(/\/\*[\s\S]*?\*\//g, match => `<span class="code-comment">${match}</span>`)
             .replace(/(".*?"|'.*?'|`.*?`)/g, match => `<span class="code-string">${match}</span>`)
             .replace(/\b(const|let|var|function|return|if|else|for|while|class|import|export|from|this|new|constructor)\b/g, match => `<span class="code-keyword">${match}</span>`)
-            .replace(/\b(true|false|null|undefined|console)\b/g, match => `<span class="code-variable">${match}</span>`)
+            .replace(/\b(true|false|null|undefined|console|log)\b/g, match => `<span class="code-variable">${match}</span>`)
             .replace(/\b(\d+)\b/g, match => `<span class="code-number">${match}</span>`)
-            .replace(/\b(log|map|render|init|createPortfolio)\b/g, match => `<span class="code-function">${match}</span>`)
-            .replace(/\b(name|role|skills|passion|projects)\b/g, match => `<span class="code-property">${match}</span>`)
-            .replace(/\b(SoftwareEngineer)\b/g, match => `<span class="code-class">${match}</span>`);
+            .replace(/\b(init)\b/g, match => `<span class="code-function">${match}</span>`)
+            .replace(/\b(name|role)\b/g, match => `<span class="code-property">${match}</span>`)
+            .replace(/\$\{.*?\}/g, match => `<span class="code-template">${match}</span>`);
     }
     
     // Initialize the loading animation
     function initLoadingAnimation() {
-        if (!codeTypingElement || !loadingScreen) {
+        // Make sure loading screen is visible
+        document.body.classList.add('loading');
+        if (loadingScreen) {
+            loadingScreen.style.display = 'flex';
+            loadingScreen.style.opacity = '1';
+        } else {
+            console.error('Loading screen not found');
             skipToMainContent();
             return;
         }
         
-        // Set up typing animation
+        // Get the code editor and typing element
+        const codeEditor = document.querySelector('.code-editor');
+        if (!codeTypingElement || !codeEditor) {
+            console.error('Code typing elements not found');
+            skipToMainContent();
+            return;
+        }
+        
+        // Reset typing element
+        codeTypingElement.innerHTML = '';
+        
+        // Show code editor
+        codeEditor.style.opacity = '1';
+        codeEditor.style.transform = 'translateY(0)';
+        
+        // Type code with a delay
         let charIndex = 0;
-        const cursor = '<span class="code-cursor"></span>';
+        const typingSpeed = 8; // Even faster typing (was 15ms)
         
-        // Pre-process the highlighted code once
-        const highlightedCode = highlightCode(codeSnippet);
-        
-        // Type each character with a fixed delay
         function typeNextChar() {
             if (charIndex <= codeSnippet.length) {
-                // Get the current substring of the original code
                 const currentText = codeSnippet.substring(0, charIndex);
-                
-                // Apply highlighting to the entire current text
-                codeTypingElement.innerHTML = highlightCode(currentText) + cursor;
-                
+                codeTypingElement.innerHTML = highlightCode(currentText);
                 charIndex++;
-                setTimeout(typeNextChar, 30); // Even faster 30ms delay between characters (was 50ms)
+                setTimeout(typeNextChar, typingSpeed);
             } else {
-                // Typing complete, show completion effect
-                const codeEditor = document.querySelector('.code-editor');
-                if (codeEditor) {
-                    codeEditor.classList.add('complete');
-                }
+                // Add blinking cursor at the end
+                codeTypingElement.innerHTML = highlightCode(codeSnippet) + '<span class="code-cursor"></span>';
                 
-                // Wait a moment before fading out
+                // Complete animation after a longer pause (about 2 seconds)
                 setTimeout(() => {
-                    loadingScreen.classList.add('fade-out');
+                    codeEditor.classList.add('complete');
                     
-                    // Wait for transition to complete before removing
+                    // Fade out loading screen
                     setTimeout(() => {
-                        document.body.classList.remove('loading');
-                        loadingScreen.style.display = 'none';
+                        loadingScreen.style.opacity = '0';
                         
-                        // Start main content animations
-                        startBrittanyChiangStyleAnimations();
-                    }, 800);
-                }, 800);
+                        // Remove loading screen and start main animations
+                        setTimeout(() => {
+                            loadingScreen.style.display = 'none';
+                            document.body.classList.remove('loading');
+                            startStaggeredAnimations();
+                        }, 800);
+                    }, 500);
+                }, 2000); // Longer pause here (was 300ms)
             }
         }
         
-        // Start typing
-        typeNextChar();
+        // Start typing after a short delay
+        setTimeout(typeNextChar, 200);
     }
     
     // Skip to main content if animation elements not found
@@ -88,12 +106,12 @@ dev.init();`;
             loadingScreen.style.display = 'none';
         }
         document.body.classList.remove('loading');
-        startBrittanyChiangStyleAnimations();
+        startStaggeredAnimations();
     }
     
-    // Brittany Chiang style staggered animations
-    function startBrittanyChiangStyleAnimations() {
-        console.log('Starting Brittany Chiang style animations');
+    // Staggered animations for page elements
+    function startStaggeredAnimations() {
+        console.log('Starting staggered animations');
         
         // Force hide hero elements initially
         document.querySelectorAll('.hero-animate, .hero-description, .social-links').forEach(el => {
@@ -132,7 +150,7 @@ dev.init();`;
         // Get navbar items for special handling
         const navItems = Array.from(document.querySelectorAll('.nav-item'));
         
-        // Animate navbar items one by one with setTimeout
+        // Animate navbar items one by one with setTimeout - faster animation (100ms instead of 150ms)
         navItems.forEach((navItem, index) => {
             setTimeout(() => {
                 navItem.classList.add('fade-in-element');
@@ -141,18 +159,18 @@ dev.init();`;
                 navItem.style.visibility = 'visible';
                 navItem.style.transform = 'translateY(0)';
                 console.log(`Animating navbar item ${index + 1}`);
-            }, 150 * index);
+            }, 100 * index); // Reduced from 150ms to 100ms
         });
         
-        // Calculate when navbar animation will complete
-        const navbarAnimationTime = 150 * navItems.length + 200;
+        // Calculate when navbar animation will complete - reduced by 0.5 seconds
+        const navbarAnimationTime = 100 * navItems.length + 100; // Reduced from 200ms to 100ms
         
         // Animate the rest of the elements after navbar animation completes
         setTimeout(() => {
             // Get non-navbar elements
             const nonNavElements = validElements.filter(el => !el.classList.contains('nav-item'));
             
-            // Animate each non-navbar element with a delay
+            // Animate each non-navbar element with a delay - faster animation (100ms instead of 150ms)
             nonNavElements.forEach((element, index) => {
                 setTimeout(() => {
                     element.classList.add('fade-in-element');
@@ -161,11 +179,11 @@ dev.init();`;
                     element.style.visibility = 'visible';
                     element.style.transform = 'translateY(0)';
                     console.log(`Animating non-nav element ${index + 1}`);
-                }, 150 * index);
+                }, 100 * index); // Reduced from 150ms to 100ms
             });
             
             // After all animations complete
-            const totalDelay = 150 * nonNavElements.length + 200;
+            const totalDelay = 100 * nonNavElements.length + 100; // Reduced from 200ms to 100ms
             
             setTimeout(() => {
                 document.body.classList.add('animations-complete');
