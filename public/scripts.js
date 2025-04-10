@@ -9,44 +9,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const scrollArrow = document.getElementById('scroll-arrow');
     const roleText = document.getElementById('role-text');
     
-    // Code to be typed
-    const codeSnippet = `// Portfolio
-const dev = {
-  name: "Joseph Wicorek",
-  role: "Software Engineer",
-  init: function() {
-    console.log(\${this.name} - \${this.role});
-  }
-};
-
-dev.init(); // Output: Joseph Wicorek - Software Engineer`;
-    
-    // Function to add syntax highlighting
-    function highlightCode(code) {
-        return code
-            .replace(/\/\/.*$/gm, match => `<span class="code-comment">${match}</span>`)
-            .replace(/\/\*[\s\S]*?\*\//g, match => `<span class="code-comment">${match}</span>`)
-            .replace(/(".*?"|'.*?'|`.*?`)/g, match => `<span class="code-string">${match}</span>`)
-            .replace(/\b(const|let|var|function|return|if|else|for|while|class|import|export|from|this|new|constructor)\b/g, match => `<span class="code-keyword">${match}</span>`)
-            .replace(/\b(true|false|null|undefined|console|log)\b/g, match => `<span class="code-variable">${match}</span>`)
-            .replace(/\b(\d+)\b/g, match => `<span class="code-number">${match}</span>`)
-            .replace(/\b(init)\b/g, match => `<span class="code-function">${match}</span>`)
-            .replace(/\b(name|role)\b/g, match => `<span class="code-property">${match}</span>`)
-            .replace(/\$\{.*?\}/g, match => `<span class="code-template">${match}</span>`);
-    }
-    
     // Initialize the loading animation
     function initLoadingAnimation() {
         // Make sure loading screen is visible
         document.body.classList.add('loading');
-        if (loadingScreen) {
-            loadingScreen.style.display = 'flex';
-            loadingScreen.style.opacity = '1';
-        } else {
+        if (!loadingScreen) {
             console.error('Loading screen not found');
             skipToMainContent();
             return;
         }
+        
+        // Ensure loading screen is visible
+        loadingScreen.style.display = 'flex';
+        loadingScreen.style.opacity = '1';
         
         // Get the code editor and typing element
         const codeEditor = document.querySelector('.code-editor');
@@ -56,28 +31,42 @@ dev.init(); // Output: Joseph Wicorek - Software Engineer`;
             return;
         }
         
-        // Reset typing element
-        codeTypingElement.innerHTML = '';
+        // Set the exact HTML content we want to display
+        const exactCodeHTML = `<span class="code-comment">// Portfolio</span>
+<span class="code-keyword">const</span> dev = {
+  <span class="code-property">name</span>: <span class="code-string">"Joseph Wicorek"</span>,
+  <span class="code-property">role</span>: <span class="code-string">"Software Engineer"</span>,
+  <span class="code-function">init</span>: <span class="code-keyword">function</span>() {
+    <span class="code-variable">console</span>.<span class="code-function">log</span>(<span class="code-template">\${this.name}</span> - <span class="code-template">\${this.role}</span>);
+  }
+};
+
+dev.<span class="code-function">init</span>(); <span class="code-comment">// Output: Joseph Wicorek - Software Engineer</span>`;
         
         // Show code editor
         codeEditor.style.opacity = '1';
         codeEditor.style.transform = 'translateY(0)';
         
-        // Type code with a delay
+        // Function to simulate typing
+        let displayedText = '';
         let charIndex = 0;
-        const typingSpeed = 8; // Even faster typing (was 15ms)
+        
+        // Calculate typing speed to make the entire animation take about 2 seconds
+        const totalChars = exactCodeHTML.length;
+        const totalTypingTime = 2000; // 2 seconds in milliseconds
+        const typingSpeed = Math.floor(totalTypingTime / totalChars);
         
         function typeNextChar() {
-            if (charIndex <= codeSnippet.length) {
-                const currentText = codeSnippet.substring(0, charIndex);
-                codeTypingElement.innerHTML = highlightCode(currentText);
+            if (charIndex < exactCodeHTML.length) {
+                displayedText += exactCodeHTML.charAt(charIndex);
+                codeTypingElement.innerHTML = displayedText;
                 charIndex++;
                 setTimeout(typeNextChar, typingSpeed);
             } else {
                 // Add blinking cursor at the end
-                codeTypingElement.innerHTML = highlightCode(codeSnippet) + '<span class="code-cursor"></span>';
+                codeTypingElement.innerHTML = exactCodeHTML + '<span class="code-cursor"></span>';
                 
-                // Complete animation after a longer pause (about 2 seconds)
+                // Complete animation after a 1-second pause
                 setTimeout(() => {
                     codeEditor.classList.add('complete');
                     
@@ -90,9 +79,9 @@ dev.init(); // Output: Joseph Wicorek - Software Engineer`;
                             loadingScreen.style.display = 'none';
                             document.body.classList.remove('loading');
                             startStaggeredAnimations();
-                        }, 800);
-                    }, 500);
-                }, 2000); // Longer pause here (was 300ms)
+                        }, 500);
+                    }, 300);
+                }, 1000); // 1-second pause
             }
         }
         
