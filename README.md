@@ -29,7 +29,3 @@ Then open your browser to `http://localhost:3000`
 - Font Awesome for icons
 - Google Fonts (Fira Code, Inter)
 
-## Contact
-
-- GitHub: [JoeWicorek](https://github.com/JoeWicorek)
-- Email: joewicorek@example.com
