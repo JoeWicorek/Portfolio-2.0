@@ -31,8 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
-        // Set the exact HTML content we want to display
-        const exactCodeHTML = `<span class="code-comment">// Portfolio</span>
+        // The final code to display with syntax highlighting
+        const finalCodeHTML = `<span class="code-comment">// Portfolio</span>
 <span class="code-keyword">const</span> dev = {
   <span class="code-property">name</span>: <span class="code-string">"Joseph Wicorek"</span>,
   <span class="code-property">role</span>: <span class="code-string">"Software Engineer"</span>,
@@ -47,46 +47,133 @@ dev.<span class="code-function">init</span>(); <span class="code-comment">// Out
         codeEditor.style.opacity = '1';
         codeEditor.style.transform = 'translateY(0)';
         
-        // Function to simulate typing
-        let displayedText = '';
-        let charIndex = 0;
+        // Set up a simple CSS animation for the cursor
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes blink {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0; }
+            }
+            .code-cursor {
+                display: inline-block;
+                width: 2px;
+                height: 1em;
+                background-color: #fff;
+                margin-left: 2px;
+                animation: blink 1s infinite;
+                vertical-align: text-bottom;
+            }
+        `;
+        document.head.appendChild(style);
         
-        // Calculate typing speed to make the entire animation take about 2 seconds
-        const totalChars = exactCodeHTML.length;
-        const totalTypingTime = 2000; // 2 seconds in milliseconds
-        const typingSpeed = Math.floor(totalTypingTime / totalChars);
+        // Create a cursor element
+        const cursor = document.createElement('span');
+        cursor.className = 'code-cursor';
         
-        function typeNextChar() {
-            if (charIndex < exactCodeHTML.length) {
-                displayedText += exactCodeHTML.charAt(charIndex);
-                codeTypingElement.innerHTML = displayedText;
-                charIndex++;
-                setTimeout(typeNextChar, typingSpeed);
-            } else {
-                // Add blinking cursor at the end
-                codeTypingElement.innerHTML = exactCodeHTML + '<span class="code-cursor"></span>';
-                
-                // Complete animation after a 1-second pause
-                setTimeout(() => {
+        // Set initial empty content
+        codeTypingElement.innerHTML = '';
+        codeTypingElement.appendChild(cursor);
+        
+        // Use GSAP for ultra-smooth animation if available
+        if (window.gsap) {
+            // Pre-render the typing animation
+            const rawCode = finalCodeHTML.replace(/<[^>]*>/g, '');
+            const duration = 2; // 2 seconds
+            
+            gsap.to(cursor, {
+                duration: 0.01,
+                opacity: 1,
+                ease: "none"
+            });
+            
+            // Create a timeline for typing
+            const tl = gsap.timeline();
+            
+            // Animate typing
+            tl.to({}, {
+                duration: duration,
+                onUpdate: function() {
+                    const progress = this.progress();
+                    const charCount = Math.floor(rawCode.length * progress);
+                    const visibleText = rawCode.substring(0, charCount);
+                    
+                    // Apply syntax highlighting to the final HTML
+                    const visibleHTML = finalCodeHTML.substring(0, 
+                        getHTMLIndexForRawIndex(finalCodeHTML, rawCode, charCount));
+                    
+                    codeTypingElement.innerHTML = visibleHTML;
+                    codeTypingElement.appendChild(cursor);
+                }
+            });
+            
+            // Pause after typing
+            tl.to({}, {
+                duration: 1, // 1 second pause
+                onComplete: function() {
+                    // Complete animation
                     codeEditor.classList.add('complete');
                     
                     // Fade out loading screen
-                    setTimeout(() => {
-                        loadingScreen.style.opacity = '0';
-                        
-                        // Remove loading screen and start main animations
-                        setTimeout(() => {
+                    gsap.to(loadingScreen, {
+                        opacity: 0,
+                        duration: 0.3,
+                        delay: 0.3,
+                        onComplete: function() {
                             loadingScreen.style.display = 'none';
                             document.body.classList.remove('loading');
                             startStaggeredAnimations();
-                        }, 500);
-                    }, 300);
-                }, 1000); // 1-second pause
+                        }
+                    });
+                }
+            });
+        } else {
+            // Fallback for when GSAP is not available
+            // Just show the code immediately
+            codeTypingElement.innerHTML = finalCodeHTML + '<span class="code-cursor"></span>';
+            
+            // Complete animation after a 1-second pause
+            setTimeout(() => {
+                codeEditor.classList.add('complete');
+                
+                // Fade out loading screen
+                setTimeout(() => {
+                    loadingScreen.style.opacity = '0';
+                    
+                    // Remove loading screen and start main animations
+                    setTimeout(() => {
+                        loadingScreen.style.display = 'none';
+                        document.body.classList.remove('loading');
+                        startStaggeredAnimations();
+                    }, 500);
+                }, 300);
+            }, 1000);
+        }
+    }
+    
+    // Helper function to find the HTML index corresponding to a raw text index
+    function getHTMLIndexForRawIndex(html, rawText, rawIndex) {
+        if (rawIndex >= rawText.length) return html.length;
+        if (rawIndex <= 0) return 0;
+        
+        let htmlIndex = 0;
+        let rawCurrentIndex = 0;
+        let inTag = false;
+        
+        for (let i = 0; i < html.length; i++) {
+            if (html[i] === '<') {
+                inTag = true;
+            } else if (html[i] === '>') {
+                inTag = false;
+            } else if (!inTag) {
+                if (rawCurrentIndex === rawIndex) {
+                    htmlIndex = i;
+                    break;
+                }
+                rawCurrentIndex++;
             }
         }
         
-        // Start typing after a short delay
-        setTimeout(typeNextChar, 200);
+        return htmlIndex;
     }
     
     // Skip to main content if animation elements not found
