@@ -290,6 +290,9 @@ dev.<span class="code-function">init</span>(); <span class="code-comment">// Out
         if (typeof AOS !== 'undefined' && AOS.refresh) {
             AOS.refresh();
         }
+
+        // Initialize contact form
+        initContactForm();
     }
     
     // Typewriter effect for role text
@@ -335,6 +338,117 @@ dev.<span class="code-function">init</span>(); <span class="code-comment">// Out
         
         // Start the typewriter effect
         typeRole(roles[currentRoleIndex]);
+    }
+    
+    // Handle contact form submission
+    function initContactForm() {
+        const contactForm = document.querySelector('.contact-form');
+        if (!contactForm) return;
+
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // Simple validation
+            if (!name || !email || !message) {
+                showFormMessage('Please fill out all required fields', 'error');
+                return;
+            }
+            
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showFormMessage('Please enter a valid email address', 'error');
+                return;
+            }
+            
+            // Normally you would send this data to a server
+            console.log('Form submitted:', { name, email, subject, message });
+            
+            // For demo purposes, just show success message
+            showFormMessage('Message sent successfully! I\'ll get back to you soon.', 'success');
+            
+            // Reset form
+            contactForm.reset();
+        });
+        
+        function showFormMessage(message, type) {
+            // Check if message element already exists
+            let messageEl = document.querySelector('.form-message');
+            
+            // If not, create one
+            if (!messageEl) {
+                messageEl = document.createElement('div');
+                messageEl.className = 'form-message';
+                contactForm.appendChild(messageEl);
+            }
+            
+            // Set message content and class
+            messageEl.textContent = message;
+            messageEl.className = `form-message ${type}`;
+            
+            // Add styles dynamically
+            const style = document.createElement('style');
+            style.textContent = `
+                .form-message {
+                    padding: 10px;
+                    margin-top: 15px;
+                    border-radius: 4px;
+                    text-align: center;
+                    animation: fadeIn 0.3s ease;
+                }
+                
+                .form-message.success {
+                    background-color: rgba(0, 255, 128, 0.1);
+                    color: #00ff80;
+                    border: 1px solid rgba(0, 255, 128, 0.3);
+                }
+                
+                .form-message.error {
+                    background-color: rgba(255, 0, 0, 0.1);
+                    color: #ff5555;
+                    border: 1px solid rgba(255, 0, 0, 0.3);
+                }
+                
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(-10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+            `;
+            
+            // Add style to document if not already added
+            if (!document.querySelector('style[data-form-message]')) {
+                style.setAttribute('data-form-message', 'true');
+                document.head.appendChild(style);
+            }
+            
+            // Remove message after 5 seconds
+            setTimeout(() => {
+                messageEl.style.animation = 'fadeOut 0.3s ease forwards';
+                
+                // Add fadeOut animation if not already added
+                if (!document.querySelector('style[data-form-message-out]')) {
+                    const outStyle = document.createElement('style');
+                    outStyle.setAttribute('data-form-message-out', 'true');
+                    outStyle.textContent = `
+                        @keyframes fadeOut {
+                            from { opacity: 1; transform: translateY(0); }
+                            to { opacity: 0; transform: translateY(-10px); }
+                        }
+                    `;
+                    document.head.appendChild(outStyle);
+                }
+                
+                setTimeout(() => {
+                    messageEl.remove();
+                }, 300);
+            }, 5000);
+        }
     }
     
     // Start the loading animation
