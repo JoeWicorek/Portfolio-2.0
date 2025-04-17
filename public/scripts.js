@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadingScreen = document.querySelector('.loading-screen');
     const codeTypingElement = document.querySelector('.code-typing');
     const heroElements = document.querySelectorAll('.hero-animate');
-    const scrollArrow = document.getElementById('scroll-arrow');
     const roleText = document.getElementById('role-text');
     
     // Initialize the loading animation
@@ -176,13 +175,56 @@ dev.<span class="code-function">init</span>(); <span class="code-comment">// Out
         return htmlIndex;
     }
     
-    // Skip to main content if animation elements not found
+    // Skip the loading animation and go straight to the main content
     function skipToMainContent() {
+        // Hide loading screen if it exists
         if (loadingScreen) {
-            loadingScreen.style.display = 'none';
+            loadingScreen.style.opacity = '0';
+            loadingScreen.style.visibility = 'hidden';
+            
+            // Remove after transition
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+            }, 500);
         }
-        document.body.classList.remove('loading');
-        startStaggeredAnimations();
+        
+        // Show all hero elements
+        document.querySelectorAll('.hero-animate').forEach(el => {
+            el.classList.add('fade-in-element');
+            el.classList.remove('hidden');
+            el.style.opacity = '1';
+            el.style.visibility = 'visible';
+            el.style.transform = 'translateY(0)';
+        });
+        
+        // Show the CTA wrapper specifically
+        const ctaWrapper = document.querySelector('.cta-wrapper');
+        if (ctaWrapper) {
+            ctaWrapper.classList.add('fade-in-element');
+            ctaWrapper.classList.remove('hidden');
+            ctaWrapper.style.opacity = '1';
+            ctaWrapper.style.visibility = 'visible';
+            ctaWrapper.style.transform = 'translateY(0)';
+        }
+        
+        // Show the hero description specifically
+        const heroDescription = document.querySelector('.hero-description');
+        if (heroDescription) {
+            heroDescription.classList.add('fade-in-element');
+            heroDescription.classList.remove('hidden');
+            heroDescription.style.opacity = '1';
+            heroDescription.style.visibility = 'visible';
+            heroDescription.style.transform = 'translateY(0)';
+        }
+        
+        // Add animations-complete class to body
+        document.body.classList.add('animations-complete');
+        
+        // Initialize typewriter effect
+        initTypewriterEffect();
+        
+        // Initialize other page elements
+        initializePageElements();
     }
     
     // Staggered animations for page elements
@@ -210,10 +252,7 @@ dev.<span class="code-function">init</span>(); <span class="code-comment">// Out
             // 4. Then animate side social links
             document.querySelector('.side-social'),
             
-            // 5. Then animate scroll arrow
-            document.getElementById('scroll-arrow'),
-            
-            // 6. Finally animate hero content
+            // 5. Finally animate hero content
             ...Array.from(document.querySelectorAll('.hero-animate'))
         ];
         
@@ -264,6 +303,24 @@ dev.<span class="code-function">init</span>(); <span class="code-comment">// Out
             setTimeout(() => {
                 document.body.classList.add('animations-complete');
                 
+                // Make sure the CTA link is visible
+                const ctaWrapper = document.querySelector('.cta-wrapper');
+                if (ctaWrapper) {
+                    ctaWrapper.classList.add('fade-in-element');
+                    ctaWrapper.style.opacity = '1';
+                    ctaWrapper.style.visibility = 'visible';
+                    ctaWrapper.style.transform = 'translateY(0)';
+                }
+                
+                // Make sure the hero description is visible
+                const heroDescription = document.querySelector('.hero-description');
+                if (heroDescription) {
+                    heroDescription.classList.add('fade-in-element');
+                    heroDescription.style.opacity = '1';
+                    heroDescription.style.visibility = 'visible';
+                    heroDescription.style.transform = 'translateY(0)';
+                }
+                
                 // Initialize typewriter effect
                 initTypewriterEffect();
                 
@@ -291,8 +348,35 @@ dev.<span class="code-function">init</span>(); <span class="code-comment">// Out
             AOS.refresh();
         }
 
+        // Initialize smooth scrolling for anchor links
+        initSmoothScrolling();
+
         // Initialize contact form
         initContactForm();
+    }
+    
+    // Direct scrolling implementation with no delay
+    function initSmoothScrolling() {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    // Get the target position with offset
+                    const offset = 80;
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - offset;
+                    
+                    // Immediate scroll with animation
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
     }
     
     // Typewriter effect for role text
@@ -303,41 +387,68 @@ dev.<span class="code-function">init</span>(); <span class="code-comment">// Out
             return;
         }
         
-        console.log('Initializing typewriter effect');
-        const roles = ['Software Engineer', 'Data Engineer', 'Full-Stack Developer'];
-        let currentRoleIndex = 0;
+        // Roles to cycle through - restored to original roles
+        const roles = [
+            'Software Engineer',
+            'Data Engineer',
+            'Full-Stack Developer'
+        ];
         
-        function typeRole(role) {
-            let i = 0;
-            roleText.textContent = '';
+        let currentRoleIndex = 0;
+        let currentCharIndex = 0;
+        let isDeleting = false;
+        let typingSpeed = 100; // Base typing speed
+        
+        // Type or delete characters
+        function typeCharacter() {
+            const currentRole = roles[currentRoleIndex];
             
-            function type() {
-                if (i < role.length) {
-                    roleText.textContent += role.charAt(i);
-                    i++;
-                    setTimeout(type, 100);
-                } else {
-                    // Wait before erasing
-                    setTimeout(erase, 2000);
-                }
+            // If deleting, remove a character
+            if (isDeleting) {
+                roleText.textContent = currentRole.substring(0, currentCharIndex - 1);
+                currentCharIndex--;
+                typingSpeed = 50; // Faster when deleting
+            } else {
+                // If typing, add a character
+                roleText.textContent = currentRole.substring(0, currentCharIndex + 1);
+                currentCharIndex++;
+                typingSpeed = 100; // Normal speed when typing
             }
             
-            function erase() {
-                if (roleText.textContent.length > 0) {
-                    roleText.textContent = roleText.textContent.slice(0, -1);
-                    setTimeout(erase, 50);
-                } else {
-                    // Move to next role
-                    currentRoleIndex = (currentRoleIndex + 1) % roles.length;
-                    setTimeout(() => typeRole(roles[currentRoleIndex]), 500);
-                }
+            // If finished typing the current role
+            if (!isDeleting && currentCharIndex === currentRole.length) {
+                isDeleting = true;
+                typingSpeed = 1000; // Pause at the end of the word
+            } 
+            // If finished deleting the current role
+            else if (isDeleting && currentCharIndex === 0) {
+                isDeleting = false;
+                currentRoleIndex = (currentRoleIndex + 1) % roles.length;
+                typingSpeed = 500; // Pause before typing the next word
             }
             
-            type();
+            // Continue the typing effect
+            setTimeout(typeCharacter, typingSpeed);
         }
         
-        // Start the typewriter effect
-        typeRole(roles[currentRoleIndex]);
+        // Start the typing effect
+        setTimeout(typeCharacter, 1000);
+        
+        // Make sure the CTA link is visible
+        const ctaWrapper = document.querySelector('.cta-wrapper');
+        if (ctaWrapper) {
+            ctaWrapper.classList.remove('hidden');
+            ctaWrapper.style.opacity = '1';
+            ctaWrapper.style.visibility = 'visible';
+        }
+        
+        // Make sure the hero description is visible
+        const heroDescription = document.querySelector('.hero-description');
+        if (heroDescription) {
+            heroDescription.classList.remove('hidden');
+            heroDescription.style.opacity = '1';
+            heroDescription.style.visibility = 'visible';
+        }
     }
     
     // Handle contact form submission

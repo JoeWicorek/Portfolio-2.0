@@ -12,7 +12,7 @@
     --white: #e6f1ff;
     --font-mono: 'Fira Code', 'Fira Mono', monospace;
     --font-sans: 'Inter', -apple-system, system-ui, sans-serif;
-    --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-timing: cubic-bezier(0.645, 0.045, 0.355, 1);
     --card-bg-color: #112240;
 }
 
@@ -452,7 +452,10 @@ body.animations-complete #scroll-arrow {
 /* Override for hero elements when they should appear */
 .hero-description.fade-in-element,
 .social-links.fade-in-element,
-.hero-animate.fade-in-element {
+.hero-animate.fade-in-element,
+body.animations-complete .hero-description,
+body.animations-complete .hero-animate,
+body.animations-complete .cta-wrapper {
     opacity: 1 !important;
     transform: translateY(0) !important;
     visibility: visible !important;
@@ -735,7 +738,7 @@ h2 {
         opacity: 0.25;
     }
     
-    .project-card.featured-project.right-aligned .project-tech-list,
+    .project-card.featured-project.right-aligned .tech-stack,
     .project-card.featured-project.right-aligned .project-links {
         justify-content: flex-start;
     }
@@ -1534,6 +1537,10 @@ code {
     pointer-events: none;
 }
 
+.scroll-indicator {
+    display: none !important;
+}
+
 .arrow-container {
     width: max(35px, min(6vw, 40px));
     height: max(35px, min(6vw, 40px));
@@ -2153,4 +2160,66 @@ body.animations-complete #scroll-arrow {
     stroke-width: 2;
     stroke-linecap: round;
     stroke-linejoin: round;
+}
+
+/* CTA Link in Hero Section - Completely rewritten */
+.cta-link {
+    display: inline-block;
+    color: var(--primary-color);
+    font-family: var(--font-mono);
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    padding-bottom: 5px;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    margin-left: 5px;
+}
+
+/* Single arrow with ::before */
+.cta-link::before {
+    content: '↓';
+    margin-right: 8px;
+    display: inline-block;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Underline animation */
+.cta-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--primary-color);
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Hover animations */
+.cta-link:hover {
+    color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.cta-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+.cta-link:hover::before {
+    transform: translateY(3px);
+}
+
+/* Remove any previous arrow icon styles */
+.arrow-icon {
+    display: none;
+}
+
+body.animations-complete .cta-wrapper {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    visibility: visible !important;
 }
