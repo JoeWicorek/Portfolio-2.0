@@ -65,4 +65,4 @@ Joseph Wicorek
 ## 📄 License
 This project is licensed under the MIT License.
 
-                                                © 2025 Joseph Wicorek. All Rights Reserved.
+                                      © 2025 Joseph Wicorek. All Rights Reserved.
