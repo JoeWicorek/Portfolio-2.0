@@ -1698,11 +1698,47 @@ footer {
 .footer-logo {
     display: flex;
     align-items: center;
-    font-family: 'Fira Code', monospace;
-    font-weight: 400;
-    font-size: 18px;
-    color: #fff;
-    margin-bottom: 1rem;
+    justify-content: center;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    font-family: var(--font-mono);
+}
+
+.footer-logo .logo-bracket {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.footer-logo .logo-text {
+    color: var(--lightest-slate);
+    margin: 0 2px;
+    font-weight: 700;
+}
+
+.footer-credits {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.footer-credits a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: var(--slate);
+    font-size: 0.9rem;
+    transition: color 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.footer-credits a:hover {
+    color: var(--primary-color);
+}
+
+.footer-credits a:hover .logo-text {
+    color: var(--primary-color);
+    transition: color 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .footer-text {
@@ -2222,4 +2258,51 @@ body.animations-complete .cta-wrapper {
     opacity: 1 !important;
     transform: translateY(0) !important;
     visibility: visible !important;
+}
+
+/* Footer Divider */
+.footer-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(
+        to right,
+        rgba(58, 134, 255, 0),
+        rgba(58, 134, 255, 0.5),
+        rgba(58, 134, 255, 0)
+    );
+    margin-bottom: 30px;
+}
+
+/* Enhanced Footer Styling */
+.footer {
+    padding: 40px 0 20px;
+    text-align: center;
+    background-color: var(--navy);
+}
+
+.footer-social {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.footer-social a {
+    margin: 0 15px;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.footer-social a:hover {
+    transform: translateY(-5px);
+    color: var(--primary-color);
+}
+
+.footer-social svg {
+    width: 20px;
+    height: 20px;
+    color: var(--slate);
+    transition: color 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.footer-social a:hover svg {
+    color: var(--primary-color);
 }
