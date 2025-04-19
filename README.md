@@ -1,4 +1,4 @@
-# Joseph Wicorek | Portfolio 2.0
+# Joseph Wicorek | Portfolio
 
 A modern, responsive portfolio website built primarily with Next.js and React to showcase my projects, skills, and professional experience.
 
@@ -45,23 +45,19 @@ npm run dev
 ```
 Then visit http://localhost:3000 in your browser.
 
+## 📁 Project Structure
+
+```
 Portfolio-2.0/
-
 ├── app/                 # Pages and components
-
 ├── public/              # Static assets (images, favicon, etc.)
-
 ├── styles.css           # Global CSS styles
-
 ├── scripts.js           # Custom JavaScript
-
 ├── dev-server.js        # Dev server script
-
 ├── next.config.js       # Next.js configuration
-
 ├── package.json         # Project metadata
-
 └── README.md            # You're here!
+```
 
 ## 👤 Author
 Joseph Wicorek
