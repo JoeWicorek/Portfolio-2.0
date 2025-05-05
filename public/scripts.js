@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadingScreen = document.querySelector('.loading-screen');
     const codeTypingElement = document.querySelector('.code-typing');
     const heroElements = document.querySelectorAll('.hero-animate');
+    const scrollArrow = document.getElementById('scroll-arrow');
     const roleText = document.getElementById('role-text');
     
     // Initialize the loading animation
@@ -117,6 +118,7 @@ dev.<span class="code-function">init</span>(); <span class="code-comment">// Out
                         opacity: 0,
                         duration: 0.3,
                         delay: 0.3,
+                        clearProps: 'all', // Clear props after animation for better performance
                         onComplete: function() {
                             loadingScreen.style.display = 'none';
                             document.body.classList.remove('loading');
@@ -345,7 +347,15 @@ dev.<span class="code-function">init</span>(); <span class="code-comment">// Out
         
         // Initialize AOS animations if available
         if (typeof AOS !== 'undefined' && AOS.refresh) {
-            AOS.refresh();
+            AOS.init({
+                duration: 800,
+                easing: 'ease-out',
+                once: false,
+                mirror: false,
+                offset: 50,
+                delay: 0,
+                throttleDelay: 99
+            });
         }
 
         // Initialize smooth scrolling for anchor links
