@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio CMS</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0a192f 0%, #112240 100%);
+            color: #64ffda;
+            font-family: 'Fira Code', monospace;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            padding: 2rem;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #ccd6f6;
+        }
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            grid-gap: 1rem;
+            margin: 2rem 0;
+        }
+        .sidebar {
+            background: rgba(17, 34, 64, 0.7);
+            border: 1px solid #3a86ff;
+            border-radius: 4px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+        .menu-item {
+            padding: 0.5rem;
+            margin: 0.25rem 0;
+            border-radius: 4px;
+            color: #8892b0;
+            text-align: left;
+        }
+        .menu-item.active {
+            background: rgba(58, 134, 255, 0.2);
+            color: #64ffda;
+        }
+        .content {
+            background: rgba(17, 34, 64, 0.7);
+            border: 1px solid #3a86ff;
+            border-radius: 4px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+        .project-card {
+            display: flex;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(58, 134, 255, 0.2);
+        }
+        .project-image {
+            width: 80px;
+            height: 60px;
+            background: rgba(58, 134, 255, 0.2);
+            border-radius: 4px;
+            margin-right: 1rem;
+        }
+        .project-details {
+            flex: 1;
+            text-align: left;
+        }
+        .project-title {
+            color: #ccd6f6;
+            margin-bottom: 0.25rem;
+        }
+        .project-description {
+            color: #8892b0;
+            font-size: 0.8rem;
+        }
+        .logo {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .logo span {
+            color: #3a86ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">&lt;<span>Portfolio</span>CMS/&gt;</div>
+        <h1>Portfolio CMS</h1>
+        <p>Custom content management for developers</p>
+        <div class="dashboard">
+            <div class="sidebar">
+                <div class="menu-item active">Projects</div>
+                <div class="menu-item">Skills</div>
+                <div class="menu-item">Experience</div>
+                <div class="menu-item">Education</div>
+                <div class="menu-item">Contact</div>
+                <div class="menu-item">Settings</div>
+            </div>
+            <div class="content">
+                <div class="project-card">
+                    <div class="project-image"></div>
+                    <div class="project-details">
+                        <div class="project-title">Smart Home IoT Hub</div>
+                        <div class="project-description">A centralized hub for managing smart home devices with automation rules.</div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image"></div>
+                    <div class="project-details">
+                        <div class="project-title">Sentiment Analyzer</div>
+                        <div class="project-description">Tool that analyzes text sentiment using NLP techniques.</div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image"></div>
+                    <div class="project-details">
+                        <div class="project-title">E-commerce Analytics</div>
+                        <div class="project-description">Dashboard for tracking sales and customer behavior.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

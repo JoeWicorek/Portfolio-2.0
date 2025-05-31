@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analyzer</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0a192f 0%, #112240 100%);
+            color: #64ffda;
+            font-family: 'Fira Code', monospace;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            padding: 2rem;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #ccd6f6;
+        }
+        .analyzer {
+            display: flex;
+            flex-direction: column;
+            margin: 2rem 0;
+        }
+        .input-area {
+            background: rgba(17, 34, 64, 0.7);
+            border: 1px solid #3a86ff;
+            border-radius: 4px 4px 0 0;
+            padding: 1rem;
+            min-height: 100px;
+            color: #ccd6f6;
+            text-align: left;
+        }
+        .results {
+            background: rgba(17, 34, 64, 0.7);
+            border: 1px solid #3a86ff;
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+            padding: 1rem;
+        }
+        .sentiment-score {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        .score-label {
+            color: #8892b0;
+            font-size: 0.9rem;
+        }
+        .score-value {
+            color: #64ffda;
+            font-weight: bold;
+        }
+        .sentiment-meter {
+            height: 8px;
+            background: rgba(58, 134, 255, 0.2);
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        .sentiment-fill {
+            position: absolute;
+            height: 100%;
+            width: 75%;
+            background: linear-gradient(90deg, #ff5555 0%, #ffaa55 50%, #64ffda 100%);
+            border-radius: 4px;
+        }
+        .sentiment-marker {
+            position: absolute;
+            height: 16px;
+            width: 4px;
+            background: #ffffff;
+            top: -4px;
+            left: 75%;
+            border-radius: 2px;
+        }
+        .key-phrases {
+            text-align: left;
+        }
+        .key-phrase {
+            display: inline-block;
+            background: rgba(58, 134, 255, 0.2);
+            color: #ccd6f6;
+            padding: 0.25rem 0.5rem;
+            margin: 0.25rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        .logo {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .logo span {
+            color: #3a86ff;
+        }
+        .analyze-button {
+            background: #3a86ff;
+            color: #0a192f;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+            font-family: 'Fira Code', monospace;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">&lt;<span>Sentiment</span>Analyzer/&gt;</div>
+        <h1>Sentiment Analyzer</h1>
+        <p>Analyze text sentiment using natural language processing</p>
+        <div class="analyzer">
+            <div class="input-area">
+                I absolutely love this new product! The interface is intuitive and the features are exactly what I needed. Customer service was also very helpful when I had questions.
+            </div>
+            <button class="analyze-button">Analyze Sentiment</button>
+            <div class="results">
+                <div class="sentiment-score">
+                    <div class="score-label">Overall Sentiment:</div>
+                    <div class="score-value">Positive (0.75)</div>
+                </div>
+                <div class="sentiment-meter">
+                    <div class="sentiment-fill"></div>
+                    <div class="sentiment-marker"></div>
+                </div>
+                <div class="key-phrases">
+                    <div class="score-label">Key Phrases:</div>
+                    <div class="key-phrase">absolutely love</div>
+                    <div class="key-phrase">intuitive</div>
+                    <div class="key-phrase">exactly what I needed</div>
+                    <div class="key-phrase">very helpful</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
